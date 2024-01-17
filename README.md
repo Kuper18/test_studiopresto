@@ -1,1 +1,1 @@
-https://kuper18.github.io/Studiopresto_Test_Task/
+https://kuper18.github.io/test_studiopresto/
