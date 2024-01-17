@@ -1,0 +1,22 @@
+.home-top {
+  margin-bottom: 50px;
+
+  @media (max-width: 428px) {
+    gap: 20px;
+    flex-direction: column;
+  }
+}
+
+.title {
+  margin: 0;
+}
+
+.custom-row {
+  @media (max-width: 428px) {
+    gap: 20px;
+  }
+}
+
+.spinner-border {
+  margin: 0 auto;
+}

@@ -1,0 +1,23 @@
+.row {
+  align-items: center;
+}
+
+.product {
+  margin-top: 50px;
+
+  &__image {
+    display: block;
+    margin: 0 auto 20px;
+    width: 300px;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.product__key {
+  font-size: 1.2rem;
+  font-weight: 500;
+}

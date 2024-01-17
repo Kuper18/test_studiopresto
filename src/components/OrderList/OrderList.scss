@@ -1,0 +1,13 @@
+.order-list {
+  display: grid;
+  grid-template-columns: repeat(1, 286px);
+  gap: 20px;
+
+  @media (min-width: 767px) {
+    grid-template-columns: repeat(2, 286px);
+  }
+
+  @media (min-width: 992px) {
+    grid-template-columns: repeat(3, 286px);
+  }
+}
