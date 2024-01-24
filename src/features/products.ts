@@ -1,48 +1,42 @@
 /* eslint-disable no-param-reassign */
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Product } from '../types/Product';
+import { getAllProducts } from '../utils/fetchClient';
 
 type ProductsState = {
   products: Product[];
-  selectedProducts: number[];
   loading: boolean;
   error: string;
 };
 
 const initialState: ProductsState = {
   products: [],
-  selectedProducts: [],
   loading: false,
   error: '',
 };
 
+export const init = createAsyncThunk('products/fetch', () => {
+  return getAllProducts();
+});
+
 const productsSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {
-    setProducts: (state, action: PayloadAction<Product[]>) => {
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(init.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(init.fulfilled, (state, action) => {
+      state.loading = false;
       state.products = action.payload;
-    },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.loading = action.payload;
-    },
-    setError: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-    },
-    setId: (state, action: PayloadAction<number>) => {
-      state.selectedProducts.push(action.payload);
-    },
-    removeId: (state, action: PayloadAction<number>) => {
-      state.selectedProducts = state.selectedProducts.filter(
-        (id) => id !== action.payload,
-      );
-    },
-    removeAllIds: (state) => {
-      state.selectedProducts = [];
-    },
+    });
+    builder.addCase(init.rejected, (state) => {
+      state.loading = false;
+      state.error = 'Something went wrong';
+    });
   },
 });
 
-export const { actions } = productsSlice;
 export default productsSlice.reducer;
+export const { actions } = productsSlice;

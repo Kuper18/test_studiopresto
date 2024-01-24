@@ -1,10 +1,11 @@
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ProductQuantities } from '../types/ProductQuantities';
 
+const quantity = JSON.parse(localStorage.getItem('quantity') || '[]');
+
 const initialState = {
-  productQuantities: {} as ProductQuantities,
+  productQuantities: quantity[0] || {},
 };
 
 const orderSlice = createSlice({
@@ -21,10 +22,7 @@ const orderSlice = createSlice({
       delete state.productQuantities[action.payload];
     },
     deleteAll: (state) => {
-      // eslint-disable-next-line guard-for-in
-      for (const key in state.productQuantities) {
-        delete state.productQuantities[key];
-      }
+      state.productQuantities = {};
     },
   },
 });
