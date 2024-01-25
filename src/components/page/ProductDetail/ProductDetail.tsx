@@ -9,11 +9,13 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import {
   actions as productsToBuyActions,
 } from '../../../features/productsToBuy';
+import { actions as orderActions } from '../../../features/order';
 import { BreadCrumb } from '../../atoms/BreadCrumb/BreadCrumb';
 import { Modal } from '../../atoms/Modal/Modal';
 import { Loader } from '../../atoms/Loader/Loader';
 import { Button } from '../../atoms/Button/Button';
 import './ProductDetail.scss';
+import { setItemToLocalStorage } from '../../../utils/localStorage';
 
 export const ProductDetail: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -42,12 +44,17 @@ export const ProductDetail: React.FC = () => {
   }, [pathname]);
 
   const handleClick = () => {
-    if (selectedId.includes(product?.id)) {
-      dispatch(productsToBuyActions.removeId(product?.id));
+    setItemToLocalStorage('ids', product.id);
+
+    if (selectedId.includes(product.id)) {
+      dispatch(productsToBuyActions.removeId(product.id));
+      dispatch(orderActions.deleteItem(product.id));
+      dispatch(productsToBuyActions.deleteProduct(product.id));
+      setItemToLocalStorage('quantity', product.id);
     } else {
       setIsShownModal(true);
-      dispatch(productsToBuyActions.setId(product?.id));
-      dispatch(productsToBuyActions.setId(product?.id));
+      dispatch(productsToBuyActions.setId(product.id));
+      dispatch(productsToBuyActions.addProduct(product));
     }
   };
 
