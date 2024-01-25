@@ -35,13 +35,10 @@ export const OrderPage: React.FC = () => {
       };
     }, productQuantities);
 
-    if (!Object.keys(productQuantities).length) {
-      setItemToLocalStorage('quantity', quantity);
-    }
-
+    setItemToLocalStorage('quantity', quantity);
     dispatch(orderActions.updateProductQuantities(quantity));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, [dispatch, productsToBuy.length]);
 
   return (
     <section>
